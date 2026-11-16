@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFF7E9"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>Dear Abonti ♡</title>
+
+<style>
+:root{--pink:#FCE8EF;--cream:#FFF7E9;--lav:#E8E5F9;--sage:#DCEFE2;--rose:#E9A2B5;--gold:#D9BC83;--mauve:#79546C;--card:#fff;--bg:linear-gradient(160deg,#FFF7E9,#FCE8EF 55%,#E8E5F9);--txt:#4a3243;--fs:16px;box-sizing:border-box}
+:root[data-t=dark]{--card:#3a2a38;--bg:linear-gradient(160deg,#2b2030,#3a2a38 60%,#2a2a45);--txt:#f6e9f0;--mauve:#e9bfd0}
+*{box-sizing:border-box}html{font-size:var(--fs);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg) fixed;color:var(--txt);font-family:Nunito,system-ui,sans-serif;line-height:1.6;padding:env(safe-area-inset-top) 0 calc(76px + env(safe-area-inset-bottom))}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;color:var(--mauve);margin:.2em 0;line-height:1.15}
+h1{font-size:2.3rem}h2{font-size:1.8rem}.hand{font-family:Caveat,cursive;font-size:1.4rem;color:var(--mauve)}
+main{max-width:720px;margin:0 auto;padding:16px}
+section{display:none;animation:in .5s}section.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.card{background:var(--card);border:1px solid var(--gold);border-radius:18px 6px 18px 6px;padding:18px;margin:14px 0;box-shadow:0 6px 18px #79546c1f}
+.card:nth-child(even){transform:rotate(-.4deg)}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;border-radius:99px;padding:10px 18px;background:var(--rose);color:#fff;font-weight:600;margin:3px;transition:transform .15s}
+button:active{transform:scale(.95)}button.alt{background:var(--lav);color:var(--mauve)}button.gold{background:var(--gold)}
+:focus-visible{outline:3px solid var(--mauve);outline-offset:2px}
+input,textarea,select{width:100%;padding:10px;border:1px solid var(--gold);border-radius:10px;background:var(--card);margin:4px 0}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;overflow-x:auto;gap:2px;background:var(--card);border-top:1px solid var(--gold);padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:5}
+nav button{flex:0 0 auto;background:none;color:var(--mauve);padding:6px 10px;font-size:.8rem;border-radius:12px}nav button.on{background:var(--pink);color:var(--mauve);box-shadow:inset 0 -3px var(--rose)}
+.msg{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.45rem;color:var(--txt);margin:.4em 0}
+.row{display:flex;flex-wrap:wrap;gap:4px;align-items:center}.sm{font-size:.85rem;opacity:.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+#ov,#modal{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+#ov{background:linear-gradient(#FCE8EF,#E8E5F9,#DCEFE2);color:#4a3243;transition:opacity .9s,transform .9s}#ov.out{opacity:0;transform:scale(1.15);pointer-events:none}
+#modal{background:#2b1b2899;display:none}#modal.on{display:flex}
+.paper{background:#fffdf5;color:#4a3243;max-width:480px;max-height:85vh;overflow:auto;padding:26px;border-radius:4px;box-shadow:0 14px 40px #0004;font-family:Caveat,cursive;font-size:1.45rem;text-align:left;white-space:pre-line;animation:in .6s}
+.pt{position:fixed;top:-30px;font-size:20px;animation:fall linear infinite;pointer-events:none;z-index:21}
+@keyframes fall{to{transform:translate(40px,110vh) rotate(360deg)}}
+@keyframes sway{50%{transform:rotate(6deg)}}
+.fl{display:inline-block;font-size:2.2rem;transform-origin:bottom;animation:sway 4s ease-in-out infinite;cursor:pointer}
+#garden{background:linear-gradient(#E8E5F9,#DCEFE2);border-radius:16px;min-height:150px;padding:10px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px}
+.star{cursor:pointer;opacity:.35;font-size:1.2rem}.star:hover{opacity:1}
+.env{font-size:5rem;cursor:pointer;display:block;margin:auto;background:none;transition:transform .5s}.env.open{transform:rotateX(180deg) scale(1.1)}
+#br{width:90px;height:90px;border-radius:50%;background:var(--sage);margin:12px auto;display:grid;place-items:center;color:var(--mauve);font-weight:600}
+#toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:var(--mauve);color:#fff;padding:8px 18px;border-radius:99px;z-index:40;opacity:0;transition:.3s;pointer-events:none}#toast.on{opacity:1}
+.rm *{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.done{opacity:.6;text-decoration:line-through}
+
+#amb{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}main{position:relative;z-index:1}
+.ai{position:absolute;top:-8vh;animation:drift linear infinite;opacity:.8}@keyframes drift{to{transform:translate3d(70px,115vh,0) rotate(360deg)}}
+.bf{position:absolute;font-size:1.6rem;animation:fly 22s ease-in-out infinite}@keyframes fly{0%{transform:translate(-10vw,70vh)}25%{transform:translate(30vw,25vh) rotate(12deg)}50%{transform:translate(60vw,60vh) rotate(-12deg)}75%{transform:translate(85vw,18vh)}100%{transform:translate(110vw,50vh)}}
+.tw{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 9px 2px var(--gold);animation:tw 3s ease-in-out infinite}@keyframes tw{50%{opacity:.1;transform:scale(.4)}}
+.cl{position:absolute;font-size:4.5rem;opacity:.3;animation:cl 70s linear infinite}@keyframes cl{from{transform:translateX(-25vw)}to{transform:translateX(125vw)}}
+main>div h1{background:linear-gradient(90deg,var(--mauve),var(--rose),var(--gold),var(--mauve));background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 9s linear infinite}@keyframes sh{to{background-position:250% 0}}
+.card{transition:transform .3s,box-shadow .3s;backdrop-filter:blur(6px)}.card:hover{transform:translateY(-3px);box-shadow:0 14px 28px #79546c33}
+button{box-shadow:0 4px 12px #e9a2b566;transition:transform .2s,box-shadow .2s}button:hover{transform:translateY(-2px);box-shadow:0 8px 18px #e9a2b588}nav button,.env,.pp{box-shadow:none}
+#sunbtn{animation:pulse 2.6s infinite;background:linear-gradient(90deg,var(--rose),var(--gold))}@keyframes pulse{50%{box-shadow:0 0 0 14px #d9bc8326}}
+section.on>*{animation:in .6s both}section.on>*:nth-child(2){animation-delay:.08s}section.on>*:nth-child(3){animation-delay:.16s}section.on>*:nth-child(4){animation-delay:.24s}section.on>*:nth-child(n+5){animation-delay:.3s}
+.sp{position:fixed;pointer-events:none;z-index:50;animation:sp .8s forwards}@keyframes sp{to{transform:translate(var(--x),var(--y)) scale(.2);opacity:0}}
+.mc{aspect-ratio:1;font-size:2rem;border-radius:16px;padding:0;margin:0}.mc.f{background:#fff}.mc.m{background:var(--sage);animation:in .4s}
+#pa{position:relative;height:300px;border-radius:16px;overflow:hidden;background:linear-gradient(#E8E5F9,#FCE8EF)}
+.pp{position:absolute;bottom:-50px;font-size:2.3rem;background:none;padding:6px;animation:up linear forwards}@keyframes up{to{transform:translateY(-380px) rotate(50deg)}}
+.orb{width:120px;height:120px;border-radius:50%;margin:12px auto;display:grid;place-items:center;padding:0;font-size:2.6rem;background:radial-gradient(circle at 35% 30%,#fff,var(--lav) 40%,var(--rose));box-shadow:0 0 34px var(--rose);animation:fl 4s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px)}}
+
+/* ===== iOS glass theme ===== */
+:root{--ac:#FF2D55;--glass:rgba(255,255,255,.52);--gb:rgba(255,255,255,.75);--sheet:rgba(255,255,255,.78);--fill:rgba(120,120,128,.16);--sf:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",system-ui,"Segoe UI",Roboto,sans-serif}
+:root[data-t=dark]{--glass:rgba(44,34,56,.55);--gb:rgba(255,255,255,.14);--sheet:rgba(40,30,52,.82);--fill:rgba(235,235,245,.16);--ac:#FF375F}
+html,body,button,input,select,textarea{font-family:var(--sf)}
+body{background:radial-gradient(at 12% 8%,#ffcfe0 0,transparent 42%),radial-gradient(at 88% 18%,#d6d0ff 0,transparent 44%),radial-gradient(at 15% 88%,#c9efd9 0,transparent 44%),radial-gradient(at 92% 92%,#ffe6b0 0,transparent 42%),#FFF7E9 fixed;padding-bottom:calc(104px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+:root[data-t=dark] body{background:radial-gradient(at 12% 8%,#5a2748 0,transparent 42%),radial-gradient(at 88% 18%,#33316b 0,transparent 44%),radial-gradient(at 15% 88%,#21493d 0,transparent 44%),radial-gradient(at 92% 92%,#5b4620 0,transparent 42%),#1c1424 fixed}
+h1,h2,h3{font-family:var(--sf);font-weight:700;letter-spacing:-.025em;color:var(--txt)}h1{font-size:2.15rem}h2{font-size:1.65rem}h3{font-size:1.15rem}
+main>div h1{background:none;-webkit-text-fill-color:currentColor;animation:none}
+.hand{font-family:var(--sf);font-size:1rem;font-weight:500;color:var(--txt);opacity:.65}
+.msg{font-family:var(--sf);font-size:1.28rem;font-weight:600;line-height:1.4;letter-spacing:-.015em}
+.sm{opacity:.6;font-size:.82rem}
+.card,.card:nth-child(even){transform:none;background:var(--glass);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border:1px solid var(--gb);border-radius:26px;box-shadow:0 10px 34px rgba(80,50,90,.12),inset 0 1px 0 rgba(255,255,255,.7)}
+.card:hover{transform:none;box-shadow:0 14px 40px rgba(80,50,90,.16),inset 0 1px 0 rgba(255,255,255,.7)}
+button{background:var(--ac);color:#fff;border-radius:14px;padding:11px 18px;font-weight:600;box-shadow:none;margin:3px}button:hover{box-shadow:none;transform:none;filter:brightness(1.06)}button:active{transform:scale(.96);filter:brightness(.95)}
+button.alt{background:var(--fill);color:var(--ac)}button.gold{background:#FF9F0A}
+#sunbtn{border-radius:22px;background:linear-gradient(135deg,#FF2D55,#FF9F0A);box-shadow:0 8px 24px rgba(255,45,85,.35);animation:none}
+button:disabled{opacity:.5}
+input,textarea,select{background:var(--fill);border:0;border-radius:12px;padding:12px 14px;color:var(--txt)}
+input[type=range]{accent-color:var(--ac);padding:0;background:none}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;width:51px!important;height:31px;border-radius:99px;background:rgba(120,120,128,.32);position:relative;transition:background .25s;vertical-align:middle;margin:0 10px 0 0;padding:0}
+input[type=checkbox]::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3);transition:transform .25s}
+input[type=checkbox]:checked{background:#34C759}input[type=checkbox]:checked::after{transform:translateX(20px)}
+label.alt{background:var(--fill)!important;color:var(--ac)}
+nav{left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));border:1px solid var(--gb);border-radius:30px;background:var(--glass);-webkit-backdrop-filter:blur(30px) saturate(200%);backdrop-filter:blur(30px) saturate(200%);box-shadow:0 12px 36px rgba(80,50,90,.2),inset 0 1px 0 rgba(255,255,255,.7);padding:6px;max-width:680px;margin:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav button{display:flex;flex-direction:column;align-items:center;gap:0;min-width:62px;padding:6px 8px;border-radius:22px;background:none;color:var(--txt);opacity:.7;font-size:.66rem;font-weight:600;box-shadow:none;margin:0}nav button span{font-size:1.25rem;line-height:1.3}
+nav button.on{background:var(--fill);color:var(--ac);opacity:1;box-shadow:none}
+#toast{background:var(--sheet);color:var(--txt);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border:1px solid var(--gb);box-shadow:0 8px 28px rgba(0,0,0,.18);top:calc(12px + env(safe-area-inset-top))}
+#modal{align-items:flex-end;background:rgba(0,0,0,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:0}
+.paper{width:100%;max-width:560px;max-height:82vh;border-radius:30px 30px 0 0;background:var(--sheet);color:var(--txt);-webkit-backdrop-filter:blur(40px) saturate(180%);backdrop-filter:blur(40px) saturate(180%);border:1px solid var(--gb);font-family:var(--sf);font-size:1.1rem;line-height:1.6;padding:34px 24px calc(24px + env(safe-area-inset-bottom));animation:sheet .45s cubic-bezier(.2,.9,.3,1);position:relative}
+.paper::before{content:"";position:absolute;top:9px;left:50%;width:38px;height:5px;margin-left:-19px;border-radius:9px;background:rgba(120,120,128,.4)}
+@keyframes sheet{from{transform:translateY(100%)}}
+#ov{background:radial-gradient(at 20% 15%,#ffcfe0 0,transparent 50%),radial-gradient(at 80% 25%,#d6d0ff 0,transparent 50%),radial-gradient(at 30% 90%,#c9efd9 0,transparent 50%),#FFF7E9}
+#ov>div{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border:1px solid rgba(255,255,255,.8);border-radius:34px;padding:30px 24px;max-width:420px;box-shadow:0 20px 60px rgba(80,50,90,.18)}
+#ov h1{color:#4a3243!important}#ov .hand{color:#4a3243}
+#garden{background:rgba(205,239,217,.45);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--gb);border-radius:26px}
+.card[style*="fffdf5"]{background:var(--glass)!important;color:var(--txt)!important}.card[style*="2b2045"]{background:rgba(43,32,69,.7)!important}
+#pa{border-radius:22px;border:1px solid var(--gb);background:linear-gradient(#e0dcff,#ffe0eb)}
+.mc{border-radius:18px}.mc.f{background:var(--glass)}
+.grid button.alt{border-radius:18px;padding:14px 8px}
+::selection{background:#ff2d5533}
+
+/* ===== Liquid glass: visible blur, light that follows touch ===== */
+:root{--glass:rgba(255,255,255,.26);--gb:rgba(255,255,255,.55);--sheet:rgba(255,255,255,.42);--fill:rgba(255,255,255,.3)}
+:root[data-t=dark]{--glass:rgba(255,255,255,.09);--gb:rgba(255,255,255,.2);--sheet:rgba(30,22,42,.5);--fill:rgba(255,255,255,.12)}
+.o2{position:absolute;border-radius:50%;filter:blur(6px);opacity:.85;animation:o2 26s ease-in-out infinite alternate;will-change:transform}
+@keyframes o2{0%{transform:translate(0,0) scale(1)}50%{transform:translate(12vw,-9vh) scale(1.2)}100%{transform:translate(-10vw,12vh) scale(.9)}}
+#lt{position:fixed;left:-230px;top:-230px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.75),rgba(255,255,255,0) 65%);pointer-events:none;z-index:0;transition:transform .25s ease-out;mix-blend-mode:soft-light}
+.card,nav,#ov>div{position:relative}nav{position:fixed}
+.card,.card:nth-child(even),nav,#ov>div{background-color:var(--glass);background-image:radial-gradient(circle 220px at var(--mx,30%) var(--my,0%),rgba(255,255,255,.5),rgba(255,255,255,0) 70%);-webkit-backdrop-filter:blur(26px) saturate(190%) brightness(1.06);backdrop-filter:blur(26px) saturate(190%) brightness(1.06);border:0;box-shadow:0 12px 40px rgba(60,30,90,.18),inset 0 1px 1px rgba(255,255,255,.9),inset 0 -10px 22px rgba(255,255,255,.1)}
+.card::before,nav::before,#ov>div::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.2px;background:linear-gradient(140deg,rgba(255,255,255,.95),rgba(255,255,255,0) 32%,rgba(255,255,255,0) 66%,rgba(255,255,255,.6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none}
+.card{transition:transform .35s cubic-bezier(.2,.8,.3,1),box-shadow .3s}
+.card:hover,.card.pr{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.012);box-shadow:0 22px 50px rgba(60,30,90,.24),inset 0 1px 1px rgba(255,255,255,.9)}
+button{background-color:rgba(255,45,85,.74);background-image:radial-gradient(circle 70px at var(--mx,50%) var(--my,0%),rgba(255,255,255,.55),rgba(255,255,255,0));-webkit-backdrop-filter:blur(14px) saturate(190%);backdrop-filter:blur(14px) saturate(190%);box-shadow:inset 0 1px 1px rgba(255,255,255,.75),inset 0 -6px 12px rgba(255,255,255,.12),0 6px 16px rgba(255,45,85,.22);border:1px solid rgba(255,255,255,.45);transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .2s}
+button:active,button.pr{transform:scale(.9)}
+button.alt{background-color:rgba(255,255,255,.38);color:var(--ac);box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 4px 12px rgba(60,30,90,.1)}
+button.gold{background-color:rgba(255,159,10,.78)}
+#sunbtn{background-color:transparent;background-image:radial-gradient(circle 140px at var(--mx,50%) var(--my,0%),rgba(255,255,255,.6),rgba(255,255,255,0)),linear-gradient(135deg,rgba(255,45,85,.85),rgba(255,159,10,.85))}
+nav button{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1),background .3s}
+nav button.on{background-color:rgba(255,255,255,.55);background-image:none;box-shadow:inset 0 1px 1px #fff,0 4px 12px rgba(60,30,90,.15);transform:scale(1.06)}
+nav button:active{transform:scale(.88)}
+.paper{background-color:var(--sheet);background-image:radial-gradient(circle 260px at var(--mx,50%) var(--my,0%),rgba(255,255,255,.4),rgba(255,255,255,0));-webkit-backdrop-filter:blur(34px) saturate(200%);backdrop-filter:blur(34px) saturate(200%);border:0;box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 -10px 50px rgba(0,0,0,.2)}
+input,textarea,select{background:rgba(255,255,255,.35);box-shadow:inset 0 1px 3px rgba(60,30,90,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#toast{background:var(--sheet);-webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%);box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.2)}
+#garden,#pa{-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%)}
+.mc.f{background-color:rgba(255,255,255,.7)}
+
+/* ===== Polish pass ===== */
+html{-webkit-tap-highlight-color:transparent}body{line-height:1.45}
+h1{font-size:2.5rem;letter-spacing:-.04em;text-wrap:balance}h2{font-size:1.9rem;letter-spacing:-.035em}
+main{padding:calc(14px + env(safe-area-inset-top)) 16px 16px}
+button{border-radius:99px;touch-action:manipulation;-webkit-user-select:none;user-select:none;padding:11px 20px}
+.card{border-radius:28px;padding:20px}.row{gap:6px}
+.msg{font-size:1.35rem;text-wrap:pretty}
+#bar{position:fixed;top:0;left:0;right:0;z-index:6;padding:calc(11px + env(safe-area-inset-top)) 16px 11px;text-align:center;font-weight:600;font-size:1rem;background:var(--glass);-webkit-backdrop-filter:blur(26px) saturate(200%);backdrop-filter:blur(26px) saturate(200%);box-shadow:0 .5px 0 var(--gb),0 8px 24px rgba(60,30,90,.08);opacity:0;transform:translateY(-100%);transition:opacity .35s,transform .45s cubic-bezier(.2,.9,.3,1);pointer-events:none}#bar.on{opacity:1;transform:none}
+.wg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.wd{aspect-ratio:1;border-radius:28px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;padding:14px;margin:0;color:var(--txt);font-weight:500;font-size:.8rem;line-height:1.2;background-color:var(--glass);box-shadow:0 12px 32px rgba(60,30,90,.16),inset 0 1px 1px rgba(255,255,255,.9),inset 0 -10px 20px rgba(255,255,255,.1)}
+.wd span:first-child{font-size:1.7rem}.wd .big{font-size:2rem;font-weight:700;letter-spacing:-.03em}
+nav{padding:6px;justify-content:space-around;overflow:visible}nav button{flex:1;min-width:0;font-size:.68rem;padding:7px 2px}nav button span{font-size:1.35rem}
+.paper .list{white-space:normal;border-radius:22px;overflow:hidden;background:var(--fill);box-shadow:inset 0 1px 1px rgba(255,255,255,.7);margin-top:12px}
+.lr{display:flex;align-items:center;width:100%;margin:0;border-radius:0;background:none;color:var(--txt);box-shadow:none;border:0;border-bottom:.5px solid rgba(120,120,128,.25);padding:13px 16px;text-align:left;font-size:1.02rem;font-weight:500;-webkit-backdrop-filter:none;backdrop-filter:none}
+.lr:last-child{border:0}.lr:active{background:rgba(120,120,128,.2);transform:none}
+.lr .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;margin-right:13px;background:rgba(255,255,255,.55);font-size:1.15rem}.lr i{margin-left:auto;opacity:.4;font-style:normal;font-size:1.5rem}
+#music{padding:8px 14px;font-size:.85rem}#vol{width:80px!important;vertical-align:middle}
+.gd{padding:9px 0;margin:0;font-size:.72rem;border-radius:12px;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+#gt{animation:wob 3s ease-in-out infinite;margin:0 auto}@keyframes wob{0%,100%{transform:rotate(0)}20%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
+.pol{padding:12px 12px 16px}.pol img{width:100%;border-radius:18px;display:block}.pol .sm{margin-bottom:6px}
+.mk{text-align:center;margin:28px 0 8px;font-size:.85rem;font-weight:500;opacity:.7;letter-spacing:.01em}
+.gd.lk{opacity:.5;font-size:.8rem}
+.card{overflow:hidden}.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:sw 1.5s .35s ease-out 1}@keyframes sw{to{transform:translateX(120%)}}
+html[data-p=n] .o2{filter:blur(6px) hue-rotate(250deg) brightness(.92)}html[data-p=e] .o2{filter:blur(6px) hue-rotate(305deg)}html[data-p=m] .o2{filter:blur(6px) hue-rotate(15deg) brightness(1.06)}
+main h1{cursor:pointer;-webkit-user-select:none;user-select:none}
+</style></head><body>
+<div id="toast" role="status"></div><div id="amb" aria-hidden="true"></div><div id="bar" aria-hidden="true">Dear Abonti ♡</div>
+<div id="ov"><div>
+<div class="hand" style="font-size:2rem">Abonti</div>
+<h1 style="color:#79546C">Welcome to your little happy place, Abonti ♡</h1>
+<p class="hand">A little sunshine, just for you.</p>
+<div style="font-size:3rem" aria-hidden="true">🌷🌸🌻🦋💜</div><br>
+<button id="enter">ENTER MY HAPPY PLACE ♡</button><br><button class="alt" id="skip">Skip intro</button><p class="sm" style="margin:14px 0 0">Made with love and respect by Safin ♡</p></div></div>
+<div id="modal" role="dialog" aria-modal="true"><div class="paper" id="mc"></div></div>
+<main>
+<div class="row" style="justify-content:space-between"><div><h1>Dear Abonti ♡</h1><div class="hand">A little universe of sunshine, smiles and beautiful possibilities.</div></div>
+<div><button class="alt" id="mviz" aria-label="Open music visualizer">✨</button><button class="alt" id="music" aria-label="Play or pause music">🎵 Music</button><input id="vol" type="range" min="0" max="100" value="50" aria-label="Music volume" style="width:90px"></div></div>
+<section id="home"></section>
+<section id="sun"></section>
+<section id="garden-s"></section>
+<section id="mood"></section>
+<section id="env-s"></section>
+<section id="wish"></section>
+<section id="ach"></section>
+<section id="open"></section>
+<section id="chal"></section>
+<section id="games"></section>
+<section id="gifts"></section>
+<section id="photos"></section>
+<section id="safin"></section>
+<section id="mus"></section>
+<section id="diary"></section>
+<section id="favs"></section>
+<section id="set"></section>
+<footer class="mk">Made with love and respect by Safin ♡</footer>
+<div id="mplayer" style="position:fixed;width:1px;height:1px;overflow:hidden;opacity:0"></div>
+</main>
+<nav id="nav" aria-label="Sections"></nav>
+<script>
+const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CATS=["Good Morning","Good Night","Self Love","Confidence","Study","Dream Big","Difficult Days","Happiness","Cute Reminders","Funny Notes","Courage","Peace","Gratitude","Compliments","Productivity","Growth"];
+const M=[
+[0,"Rise gently, Abonti. A beautiful new day is waiting for you."],[0,"Good morning. Today does not need to be perfect to be lovely."],[0,"New morning, new page. Write something kind on it."],
+[1,"You did enough today. Let your mind rest, and give tomorrow a fresh beginning."],[1,"Put the day down gently. Tomorrow will meet you with new light."],[1,"Sleep well. Whatever was left undone can wait until morning."],
+[2,"Be as patient with yourself as you are with the people you love."],[2,"You are allowed to take up space, rest, and change your mind."],[2,"You are not behind. You are on your own beautiful path."],
+[3,"You have handled every hard day so far. That is a pretty great record."],[3,"Walk in like you belong there, because you do."],[3,"Your voice matters, even when it shakes a little."],
+[4,"Start with ten focused minutes. Momentum loves a small beginning."],[4,"Understanding something slowly is still understanding it."],[4,"Rest is part of studying. Your brain does its best work when it is cared for."],
+[5,"Dream big, then take one tiny step today."],[5,"The future you imagine is still being written, and you hold the pen."],[5,"Some dreams just need a little patience and a lot of belief."],
+[6,"This day is heavy, but you do not have to carry all of it at once."],[6,"A hard day is not a hard life. Breathe and keep going gently."],[6,"It is okay to not be okay. Be gentle with yourself today."],
+[7,"Notice one small thing that made you smile today. Keep it."],[7,"Happiness often hides inside ordinary moments. Look closely."],[7,"Your smile is a small sunrise."],
+[8,"Drink some water. Stretch a little. You are doing great."],[8,"Gentle reminder: you are loved, and you are enough."],[8,"Tiny reminder: you are allowed to be proud of yourself."],
+[9,"If today feels silly, wear your favourite socks and call it strategy."],[9,"Plot twist: you are doing better than you think."],[9,"Snacks are a valid form of emotional support."],
+[10,"Courage is taking the next step while still feeling nervous."],[10,"You can be scared and brave at the same time."],[10,"Brave does not mean certain. It means you try anyway."],
+[11,"Unclench your shoulders. Soften your jaw. Breathe out slowly."],[11,"Peace can be as small as a quiet cup of tea."],[11,"You do not need to solve everything tonight."],
+[12,"Thank yourself for showing up today, even imperfectly."],[12,"Gratitude turns an ordinary day into a gift."],[12,"Write down three good things. They are usually closer than we think."],
+[13,"You make ordinary moments feel brighter."],[13,"Your kindness is quietly remembered by everyone you touch."],[13,"Your curiosity is one of your loveliest qualities."],
+[14,"Pick one task. Finish it. Enjoy the little win."],[14,"A small plan today beats a perfect plan tomorrow."],[14,"Done is a beautiful word. Celebrate it."],
+[15,"Every day gives you another chance to grow."],[15,"Mistakes are just proof that you are learning."],[15,"You can begin again, as many times as you need."],
+[13,"You have a way of making people feel seen."],[13,"The world is softer because you are in it."],[13,"Your laugh is one of the best sounds in the world."],
+[9,"Be like a cat: nap often and ignore what doesn’t deserve your energy."],[9,"Breaking news: you are adorable. More at eleven."],[9,"Today’s forecast: 100% chance of you being wonderful."],
+[12,"Be thankful for the people who make ordinary days feel special."],[12,"Today’s small mercies count too."],[4,"Your future self is cheering for the effort you put in today."],[4,"Review a little today so tomorrow feels lighter."],
+[14,"Make your list short and kind. Finish what matters most."],[14,"Clear one small corner. Notice how your mind feels lighter."],[10,"Say yes to the thing that scares you a little and excites you more."],[10,"You are stronger than the doubt that is trying to talk you out of it."],
+[5,"Your dreams do not expire. Keep watering them."],[5,"One day you will look back and be glad you kept going."],[7,"Joy is allowed even on busy days."],[11,"Let the quiet moments fill you up."],[2,"Treat yourself like someone you adore."],[3,"Rest, then try again. That is how everyone does it."],
+[0,"Good morning. Drink some water, smile at yourself, and begin softly."],[0,"Today is a blank page. Write it your way."],[1,"Close the day with one kind thought about yourself."],[1,"The stars are out, and so is your worry. Let both rest."],
+[2,"You deserve the love you give so freely to others."],[2,"Your pace is the right pace."],[3,"You walk into rooms and make them warmer."],[3,"Confidence is just courage that has had some practice."],
+[4,"Hard chapters are still part of a great story. Keep reading, keep studying."],[4,"Every page you understand is a page you earned."],[5,"Aim high, then give yourself permission to grow into it."],
+[6,"Cry if you need to, then drink some water. You are allowed to be tired."],[6,"Even slow progress is a way forward on a hard day."],[8,"You’re doing amazing, sweetie. Just a reminder."],[8,"Snack, stretch, smile. In that order."],
+[9,"I’d tell you a joke about perseverance, but you’ll get it eventually."],[10,"Courage often sounds like a small voice saying, I’ll try again tomorrow."],[11,"Take three deep breaths and feel your shoulders drop."],[12,"Gratitude makes a small day feel enormous."],[15,"You are becoming someone you’re going to be proud of."]
+].map((m,i)=>({id:i,c:m[0],t:m[1]}));
+const LET=[
+"Dear Abonti,\n\nYou are more capable than you realise. Every challenge you have faced taught you something, and you are still here, still trying, still growing.\n\nBe proud of that.",
+"Dear Abonti,\n\nBelieve in your dreams, even the quiet ones. They are not silly. They are signs of where your heart wants to go.\n\nTake one small step today.",
+"Dear Abonti,\n\nYou deserve peaceful days. Rest is not laziness. It is how you refill your sunshine.\n\nBe gentle with yourself.",
+"Dear Abonti,\n\nNever underestimate yourself. Your small achievements matter, and so does your progress, even when it feels slow.\n\nKeep going.",
+"Dear Abonti,\n\nYou can begin again. Today is a clean page and you are allowed to write anything beautiful on it.",
+"Dear Abonti,\n\nBefore an important exam, remember: you have prepared more than you think. Breathe, trust yourself, and do your best. Your worth is not a score.",
+"Dear Abonti,\n\nIf you feel overwhelmed, shrink the world. One task, one breath, one moment. You do not have to carry everything at once.",
+"Dear Abonti,\n\nAfter achieving something, pause. Don’t rush past it. Let yourself feel how much effort it took, and how well you did.\n\nYou earned this moment.",
+"Dear Abonti,\n\nStarting something new is scary because it matters. You don’t need to know every step. You only need to begin.\n\nI believe in you.",
+"Dear Abonti,\n\nRemember your potential on the days you forget it. It never left. It is waiting patiently for you, and it is bigger than you think."
+];
+const OPEN=[["Courage","Take a breath. You have done hard things before. Courage is not the absence of fear. It is you, moving forward anyway."],["a smile","Think of something that once made you laugh until it hurt. That joy still belongs to you."],["Tired","You are allowed to rest. Put the world down for a bit. It will still be there, and so will you."],["Self-doubt","The voice that says you cannot is not telling the truth. Look at everything you have already done."],["Motivation","Do just five minutes. Starting is the hardest part, and you are already reading this."],["Pride","Look at you. Say it out loud: I did that. Let yourself enjoy it."],["Peace","Close your eyes. Slow breath in, slower breath out. Nothing needs you right now."],["Dreaming","Imagine the life you want, in detail. Now pick one thing that moves you toward it."],["A fresh start","Yesterday is finished. Today has no mistakes in it yet."],["Celebration","Something good happened, so celebrate it! Dance, eat something sweet, tell someone."]];
+const MOODS={Happy:["Keep this beautiful feeling close and celebrate the little things.","Share your happiness with someone today."],Excited:["Your excitement is lovely energy. Let it carry you gently.","Write down what you are excited about."],Peaceful:["What a gift. Soak in the calm.","Sit by a window for a few minutes."],Tired:["Take things slowly. You don’t have to do everything at once.","Drink water and rest your eyes."],Stressed:["Pause for a moment. Breathe gently. You can take things one step at a time.","Write down one thing you can let go of."],Sad:["It’s okay to feel this. You don’t have to hurry through it.","Wrap up warm and listen to a comforting song."],Unmotivated:["Start with something tiny. Small beginnings can lead to beautiful things.","Do a two-minute task."],Confused:["Not knowing yet is okay. Clarity often arrives after rest.","List what you know, then what you don’t."],Confident:["Hold your head high. You’ve earned this feeling.","Do something you’ve been putting off."],Grateful:["Gratitude is a quiet kind of magic.","Send a thank-you message to someone."],Proud:["You should be. Every step counted.","Add this to your Achievements."],Overwhelmed:["One thing at a time. You’re allowed to go slowly.","Pick the smallest task and do only that."]};
+const CH=["Drink enough water","Read something interesting","Learn one new thing","Take a peaceful break","Organise one small task","Write three things you’re grateful for","Listen to a favourite song","Spend a little time outside","Celebrate one achievement","Write down a dream"];
+const FL=[["🌹","Pink Rose"],["🌸","Cherry Blossom"],["🌻","Sunflower"],["💜","Lavender"],["🌷","Tulip"],["🌼","Daisy"],["🪷","White Lily"],["💙","Forget-Me-Not"]];
+const SEC=[["home","Home"],["sun","Sunshine"],["garden-s","Garden"],["mood","Mood"],["env-s","Envelope"],["wish","Wish Jar"],["ach","Achievements"],["open","Open When"],["chal","Challenges"],["games","Games"],["gifts","365 Gifts"],["photos","Photos"],["safin","Motivate Safin"],["mus","Music"],["diary","Diary"],["favs","Favourites"],["set","Settings"]];
+const KEY="dearAbonti.v1";
+const D={v:1,intro:0,theme:"light",rm:0,fs:16,greet:"",fav:[],recent:[],wish:[],ach:[],ch:{},seeds:3,fl:[],acts:0,stars:[],sound:50};
+let S;
+try{S=Object.assign({},D,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){S=Object.assign({},D)}
+S.gifts=S.gifts||[];S.photos=S.photos||[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("Storage is full or blocked. Please export a backup.")}}
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2200)}
+const today=()=>new Date().toISOString().slice(0,10);
+const dayN=()=>Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/864e5);
+const dm=()=>M[dayN()%M.length];
+function rnd(){let p;do{p=M[Math.floor(Math.random()*M.length)]}while(M.length>5&&S.recent.slice(0,5).includes(p.id));view(p);return p}
+let cur=dm();
+function view(m){cur=m;S.recent=[m.id,...S.recent.filter(x=>x!==m.id)].slice(0,12);save()}
+function earn(){S.acts++;S.seeds++;save();confetti()}
+function confetti(){if(S.rm)return;for(let i=0;i<26;i++){const p=document.createElement("span");p.className="pt";p.textContent=["🌸","✨","💖","🌷","🦋"][i%5];p.style.cssText=`left:${Math.random()*100}vw;animation-duration:${3+Math.random()*2.5}s;animation-iteration-count:1;font-size:${16+Math.random()*14}px`;document.body.append(p);setTimeout(()=>p.remove(),6000)}}
+function fav(id){S.fav=S.fav.includes(id)?S.fav.filter(x=>x!==id):[...S.fav,id];save();toast(S.fav.includes(id)?"Saved to favourites ♡":"Removed from favourites")}
+async function copy(t){try{await navigator.clipboard.writeText(t);toast("Copied ♡")}catch(e){toast("Copy not available here")}}
+async function share(t){if(navigator.share){try{await navigator.share({title:"Dear Abonti ♡",text:t})}catch(e){}}else copy(t)}
+function modal(txt,extra){const mc=$("#mc");$("#modal").classList.add("on");mc.innerHTML="";const p=document.createElement("div");mc.append(p);const fin=()=>{mc.insertAdjacentHTML("beforeend",`<div class="row"><button id="mx">Close</button><button class="alt" id="mr">Replay</button>${extra||""}</div>`);$("#mx").onclick=()=>$("#modal").classList.remove("on");$("#mr").onclick=()=>modal(txt,extra);$("#mx").focus()};
+if(S.rm||matchMedia("(prefers-reduced-motion:reduce)").matches){p.textContent=txt;fin();return}let i=0;const id=setInterval(()=>{p.textContent=txt.slice(0,++i);if(i>=txt.length){clearInterval(id);fin()}},18)}
+function msgCard(m){const f=S.fav.includes(m.id);return `<div class="card"><div class="sm">${CATS[m.c]}</div><div class="msg">${esc(m.t)}</div><div class="row"><button data-f="${m.id}">${f?"♥ Saved":"♡ Save"}</button><button class="alt" data-c="${m.id}">Copy</button><button class="alt" data-s="${m.id}">Share</button></div></div>`}
+function bind(el){el.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{fav(+b.dataset.f);go(cur_s)});el.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>copy(M[b.dataset.c].t));el.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>share(M[b.dataset.s].t))}
+let cur_s="home",q="",cat="all";
+const R={
+home(){const d=new Date(),n=S.stars.length,hr=d.getHours(),gm=hr>=21||hr<4?"You did enough today. Let your mind rest, and give tomorrow a fresh beginning. 🌙":hr<12?"Rise gently, Abonti. A beautiful new day is waiting for you. ☀️":"Whatever this afternoon holds, you are doing better than you think. 🌸";return `<div class="card"><h2>Hello, Abonti! 🌷</h2><div class="hand">${esc(S.greet||"Today is another opportunity to bloom.")}</div><p style="font-weight:600;margin:.6em 0">${gm}</p><div class="sm">${d.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"})}</div>
+<p class="sm">Today’s little ray: ${S.ch[today()]?"you’ve completed today’s challenge 🌷":"a small challenge is waiting, if you’d like it."}</p></div>
+<div class="wg"><button class="wd" data-go="garden-s"><span>🌷</span><span><b class="big">${S.fl.length}</b><br>Flowers</span></button><button class="wd" data-go="chal"><span>🌱</span><span><b class="big">${S.seeds}</b><br>Seeds</span></button><button class="wd" data-go="favs"><span>❤️</span><span><b class="big">${S.fav.length}</b><br>Saved</span></button></div>
+<div class="card"><div class="sm">Today’s featured message</div><div class="msg">${esc(dm().t)}</div></div>
+<button class="gold" id="sunbtn" style="font-size:1.1rem;width:100%;padding:16px">I NEED A LITTLE SUNSHINE ☀️</button><div id="sunout"></div>
+<div class="card"><h3>Hidden little stars</h3><div class="sm">Some stars hide a secret. Found ${n} of 6.</div><div class="row" style="justify-content:space-around;font-size:1.4rem;margin-top:8px">${[0,1,2,3,4,5].map(i=>`<span class="star" role="button" tabindex="0" data-st="${i}">${S.stars.includes(i)?"💖":"⭐"}</span>`).join("")}</div></div>
+<div class="card"><h3>Recently viewed</h3>${S.recent.slice(0,3).map(i=>`<p class="sm">• ${esc(M[i].t)}</p>`).join("")||"<p class=sm>Nothing yet. Tap the sunshine button.</p>"}</div>
+<div class="card" style="background:#fffdf5;color:#4a3243"><h2>Dear Abonti ♡</h2><div class="hand" style="white-space:pre-line">Never forget that you are capable of beautiful things.
+
+You don’t have to be perfect. You don’t have to have everything figured out.
+
+Take your time. Believe in yourself. Keep learning. Keep dreaming. Celebrate your little achievements and never underestimate how much potential you have.
+
+Some days will be easier than others, but every day gives you another opportunity to grow.
+
+I hope this little corner of the internet reminds you to be kind to yourself, appreciate your journey and keep moving towards the beautiful future you dream about.
+
+The world is full of possibilities, and your story is still unfolding.
+
+Keep blooming, Abonti.
+
+Keep shining. ♡</div></div>`},
+sun(){const L=M.filter(m=>(cat=="all"||m.c==cat)&&m.t.toLowerCase().includes(q.toLowerCase()));return `<h2>Daily Sunshine</h2>${msgCard(cur)}<div class="row"><button class="alt" id="pv">← Previous</button><button id="rd">Random ✨</button><button class="alt" id="nx">Next →</button></div>
+<div class="card"><input id="qs" placeholder="Search messages…" aria-label="Search" value="${esc(q)}"><select id="cs" aria-label="Category"><option value="all">All categories</option>${CATS.map((c,i)=>`<option value="${i}"${cat==i?" selected":""}>${c}</option>`).join("")}</select><p class="sm">${L.length} messages</p></div>${L.slice(0,20).map(msgCard).join("")||"<p>No messages match. Try another word.</p>"}`},
+"garden-s"(){const u=Math.min(8,1+Math.floor(S.acts/2));return `<h2>Happiness Garden 🌷</h2><p class="sm">Seeds: ${S.seeds} · Unlocked flowers: ${u} of 8. Your garden never wilts.</p><div id="garden">${S.fl.map((f,i)=>`<span class="fl" role="button" tabindex="0" data-w="${i}" style="font-size:${2+f.w*.25}rem;animation-delay:${i%5*.4}s" title="${FL[f.t][1]}">${FL[f.t][0]}</span>`).join("")||"<span class=sm>Your garden is waiting for its first flower.</span>"}</div><div class="card"><select id="ft" aria-label="Flower">${FL.map((f,i)=>`<option value="${i}" ${i>=u?"disabled":""}>${f[0]} ${f[1]}${i>=u?" 🔒":""}</option>`).join("")}</select><button id="pl">Plant (1 seed)</button><p class="sm">Tap a flower to water it. Earn seeds from sunshine, wishes, achievements and challenges.</p></div>`},
+mood(){return `<h2>How is your heart feeling today?</h2><p class="sm">Any answer is okay.</p><div class="grid">${Object.keys(MOODS).map(m=>`<button class="alt" data-m="${m}">${m}</button>`).join("")}</div><div id="mo"></div>`},
+"env-s"(){return `<h2>A little something for you…</h2><button class="env" id="ev" aria-label="Open envelope">💌</button><p class="sm" style="text-align:center">Tap the envelope. There are ${LET.length} letters.</p>`},
+wish(){return `<h2>The Wish Jar ✨</h2><div class="hand">Every beautiful dream begins somewhere.</div><div class="card"><input id="wi" maxlength="140" placeholder="Write a dream or goal…" aria-label="New wish"><button id="wa">Add wish</button></div><div class="card" style="background:#2b2045;color:#fff">${S.wish.map(w=>`<span title="${esc(w.t)}" style="font-size:${w.d?1.3:1.1}rem">${w.d?"🌟":"✨"}</span>`).join("")||"Your jar is empty and ready."}</div>${S.wish.map((w,i)=>`<div class="card ${w.d?"done":""}">${esc(w.t)}<div class="row"><button class="alt" data-wd="${i}">${w.d?"Undo":"Achieved!"}</button><button class="alt" data-we="${i}">Edit</button><button class="alt" data-wx="${i}">Delete</button></div></div>`).join("")}`},
+ach(){return `<h2>Achievement Museum 👑</h2><div class="hand">Look how far you’ve come.</div><div class="card"><input id="at" maxlength="80" placeholder="What did you achieve?" aria-label="Achievement title"><textarea id="ad" rows="2" placeholder="Optional note"></textarea><button id="aa">Add to museum</button></div><p class="sm">${S.ach.length} memory cards collected</p>${S.ach.map((a,i)=>`<div class="card"><h3>🏅 ${esc(a.t)}</h3><div class="sm">${a.d}</div><p>${esc(a.n||"")}</p><button class="alt" data-ax="${i}">Remove</button></div>`).join("")||"<p>Your first memory card will appear here.</p>"}`},
+open(){return `<h2>Open when you need it</h2><div class="grid">${OPEN.map((o,i)=>`<button class="alt" data-o="${i}">Open when you need ${o[0].toLowerCase()}</button>`).join("")}</div>`},
+chal(){const i=dayN()%CH.length,done=S.ch[today()],h=Object.keys(S.ch).length;return `<h2>Little Challenges</h2><div class="card"><div class="sm">Today’s challenge</div><div class="msg">${CH[i]}</div><button id="cd" ${done?"disabled":""}>${done?"Completed 🌷":"I did it!"}</button></div><div class="card"><p>${h} challenges completed so far. Missing a day is perfectly fine.</p></div>`},
+favs(){return `<h2>Favourite Messages</h2>${S.fav.map(i=>msgCard(M[i])).join("")||"<div class=card>Hearts you save will live here ♡</div>"}`},
+set(){return `<h2>Settings</h2><div class="card"><label>Theme <select id="th"><option value="light">Light</option><option value="dark">Dark</option></select></label><label><input type="checkbox" id="rm" style="width:auto" ${S.rm?"checked":""}> Reduce animations</label><label>Text size <input id="fs" type="range" min="14" max="22" value="${S.fs}"></label><label>Custom welcome line <input id="gr" maxlength="80" value="${esc(S.greet)}"></label></div><div class="card"><button id="rp">Replay intro</button><button class="alt" id="ex">Export backup</button><label class="alt" style="display:inline-block;padding:10px 18px;border-radius:99px;background:var(--lav)">Import <input id="im" type="file" accept=".json" hidden></label><button class="gold" id="rs">Reset progress</button><p class="sm">Everything is stored on this device only. Export a backup now and then.</p></div>`}
+};
+R.games=()=>`<h2>Little Games 🎮</h2><p class="sm">Just for fun. No pressure, no scores to chase.</p><div class="row"><button data-g="mem">🌷 Flower Match</button><button data-g="pop">🌸 Petal Pop</button><button data-g="orb">🔮 Ask the Stars</button><button data-g="card">🎴 Pick a Card</button></div><div id="gm" class="card">Pick a game ♡</div>`;
+const G={
+mem(el){clearInterval(window.gt);const c=[...FL.slice(0,6),...FL.slice(0,6)].map(f=>f[0]).sort(()=>Math.random()-.5);let a=null,mv=0,left=6,lock=0;
+el.innerHTML=`<h3>Flower Match</h3><p class="sm" id="mi">Moves: 0 · Find the pairs</p><div class="grid" style="grid-template-columns:repeat(4,1fr)">${c.map((x,i)=>`<button class="alt mc" data-i="${i}" aria-label="Card ${i+1}">?</button>`).join("")}</div>`;
+el.querySelectorAll(".mc").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(lock||b.classList.contains("m")||b===a)return;b.textContent=c[i];b.classList.add("f");if(!a){a=b;return}mv++;$("#mi").textContent="Moves: "+mv;
+if(c[a.dataset.i]==c[i]){a.classList.add("m");b.classList.add("m");a=null;if(!--left){earn();toast("You did it! A seed for your garden 🌱")}}
+else{lock=1;const p=a;a=null;setTimeout(()=>{[p,b].forEach(x=>{x.textContent="?";x.classList.remove("f")});lock=0},700)}})},
+pop(el){clearInterval(window.gt);let sc=0,n=0;el.innerHTML=`<h3>Petal Pop</h3><p class="sm" id="pi">Score 0 · Best ${S.best||0}</p><div id="pa"></div>`;const pa=$("#pa");
+window.gt=setInterval(()=>{n++;if(n>28){clearInterval(window.gt);S.best=Math.max(S.best||0,sc);if(sc>=10)earn();else save();pa.innerHTML=`<div class="msg" style="padding:40px 20px;text-align:center">Lovely! You popped ${sc} petals 🌸</div>`;return}
+const b=document.createElement("button");b.className="pp";b.setAttribute("aria-label","Pop petal");b.textContent=["🌸","🌷","🦋","✨","🌼"][n%5];b.style.left=Math.random()*80+"%";b.style.animationDuration=4+Math.random()*2+"s";
+b.onclick=ev=>{sc++;$("#pi").textContent=`Score ${sc} · Best ${S.best||0}`;spark(ev.clientX,ev.clientY);b.remove()};b.onanimationend=()=>b.remove();pa.append(b)},700)},
+card(el){const C=M.filter(m=>[13,7,3].includes(m.c)).map(m=>m.t).sort(()=>Math.random()-.5).slice(0,3);el.innerHTML=`<h3>Pick a Card</h3><p class="sm">Choose one. It holds a little surprise.</p><div class="grid" style="grid-template-columns:repeat(3,1fr)">${C.map((t,i)=>`<button class="alt mc" style="aspect-ratio:3/4;font-size:2.4rem" data-k="${i}" aria-label="Card ${i+1}">🎴</button>`).join("")}</div><div class="msg" id="ck" aria-live="polite" style="text-align:center;margin-top:10px"></div>`;let done=0;el.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{if(done)return;done=1;b.textContent="💖";$("#ck").textContent=C[b.dataset.k];confetti()})},
+orb(el){const A=["Yes, and it will feel lovely.","The stars say: gently, yes.","Ask again after a deep breath.","Trust your own heart on this one.","A small step will tell you more.","The stars say: you are ready.","Something sweet is on its way.","Be patient. Good things are blooming."];
+el.innerHTML=`<h3>Ask the Stars</h3><p class="sm">Think of a gentle question, then tap the orb.</p><button class="orb" id="ob" aria-label="Ask the stars">🔮</button><div class="msg" id="oa" aria-live="polite" style="text-align:center"></div>`;$("#ob").onclick=()=>{$("#oa").textContent=A[Math.floor(Math.random()*A.length)]}}};
+function spark(x,y){if(S.rm)return;for(let i=0;i<6;i++){const s=document.createElement("span");s.className="sp";s.textContent=["✨","💖","🌸"][i%3];s.style.left=x+"px";s.style.top=y+"px";const a=i*1.05;s.style.setProperty("--x",Math.cos(a)*48+"px");s.style.setProperty("--y",Math.sin(a)*48-20+"px");document.body.append(s);setTimeout(()=>s.remove(),850)}}
+document.addEventListener("click",e=>{if(e.target.closest("button")&&!e.target.closest(".pp"))spark(e.clientX,e.clientY)});
+function ambient(){const a=$("#amb"),mk=(c,t,st)=>{const e=document.createElement("span");e.className=c;e.textContent=t;Object.assign(e.style,st);a.append(e)},r=Math.random;
+for(let i=0;i<12;i++)mk("ai",["🌸","🌷","🌼"][i%3],{left:r()*100+"vw",fontSize:14+r()*12+"px",animationDuration:14+r()*12+"s",animationDelay:-r()*20+"s"});
+for(let i=0;i<3;i++)mk("bf","🦋",{animationDelay:-i*7+"s",animationDuration:20+i*5+"s"});
+for(let i=0;i<20;i++)mk("tw","",{left:r()*100+"vw",top:r()*100+"vh",animationDelay:-r()*3+"s"});
+for(let i=0;i<2;i++)mk("cl","☁️",{top:8+i*30+"vh",animationDelay:-i*35+"s"})}
+ambient();
+(function(){const a=$("#amb"),l=document.createElement("div");l.id="lt";a.prepend(l);
+[["#ff6fa5",320,"-6vw","6vh"],["#7a6cff",360,"60vw","2vh"],["#2ed1b5",300,"-8vw","58vh"],["#ffb347",340,"62vw","62vh"],["#5cb8ff",260,"28vw","38vh"]].forEach((o,i)=>{const d=document.createElement("div");d.className="o2";Object.assign(d.style,{width:o[1]+"px",height:o[1]+"px",left:o[2],top:o[3],background:`radial-gradient(circle at 35% 30%,#fff8,${o[0]} 55%,${o[0]}00 72%)`,animationDelay:-i*5+"s",animationDuration:22+i*4+"s"});a.prepend(d)});
+const T=".card,button,nav,.paper,#ov>div";
+addEventListener("pointermove",e=>{l.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;const t=e.target.closest&&e.target.closest(T);if(!t)return;const r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;t.style.setProperty("--mx",x*100+"%");t.style.setProperty("--my",y*100+"%");if(t.classList.contains("card")){t.style.setProperty("--rx",(.5-y)*5+"deg");t.style.setProperty("--ry",(x-.5)*5+"deg")}},{passive:true});
+addEventListener("pointerdown",e=>{const t=e.target.closest&&e.target.closest(T);if(t){t.classList.add("pr");if(navigator.vibrate)navigator.vibrate(6)}},{passive:true});
+["pointerup","pointercancel"].forEach(n=>addEventListener(n,()=>document.querySelectorAll(".pr").forEach(x=>x.classList.remove("pr")),{passive:true}))})();
+const GP=["Write down three things that made today softer.","Name one thing you did well this week.","Thank someone, even in your head.","Notice something beautiful you usually walk past.","Think of someone who makes you laugh and smile about it.","List one thing your body did for you today."],FF=["Honey never spoils. Edible honey has been found in ancient tombs.","Octopuses have three hearts.","Butterflies taste with their feet.","A day on Venus is longer than its year.","Young sunflowers turn to follow the sun.","Bananas are botanically berries, but strawberries are not."];
+function gift(d){const k=d%5,L=[M.filter(m=>[0,2,3,5,15].includes(m.c)).map(m=>m.t),M.filter(m=>m.c==13).map(m=>m.t),GP,CH.map(c=>c+"."),FF],T=["Daily encouragement","Cute compliment","Gratitude prompt","Tiny challenge","Fun fact"],a=L[k];return T[k]+"\n\n"+a[Math.floor(d/5)%a.length]}
+R.gifts=()=>{S.gifts=S.gifts||[];const t=Math.min(365,dayN());return `<h2>365 Little Gifts 🎁</h2><p class="sm">One gift for every day of the year. A new one unlocks each day. Today is gift ${t}, and you can reopen any past gift. ${S.gifts.length} opened so far.</p><div class="card" style="text-align:center"><button class="env" id="gt" aria-label="Open today’s gift">🎁</button><p class="sm">Tap to open today’s gift</p></div><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px">${Array.from({length:365},(_,i)=>`<button class="gd ${i+1>t?"lk":S.gifts.includes(i+1)?"alt":""}" data-d="${i+1}" aria-label="Gift ${i+1}${i+1>t?", locked":""}">${i+1>t?"🔒":i+1}</button>`).join("")}</div>`};
+R.photos=()=>{S.photos=S.photos||[];return `<h2>Photo Memories 📸</h2><p class="sm">Photos stay on this device only. Browser storage is limited, so export a backup from Settings now and then.</p><div class="card"><input type="file" id="pf" accept="image/*" aria-label="Choose photo"><input id="pc" maxlength="80" placeholder="Caption (optional)"><button id="pad">Add memory</button></div>${S.photos.map((p,i)=>`<div class="card pol"><img src="${p.src}" alt="${esc(p.c||"Memory")}"><p class="msg" style="font-size:1.1rem">${esc(p.c||"")}</p><div class="sm">${p.d}</div><button class="alt" data-px="${i}">Remove</button></div>`).join("")||"<p>Your first memory will appear here ♡</p>"}`};
+function openG(d,b){if(d>Math.min(365,dayN())){toast("This gift unlocks on "+new Date(new Date().getFullYear(),0,d).toLocaleDateString(undefined,{month:"long",day:"numeric"})+" 🔒");return}if(!S.gifts.includes(d)){S.gifts.push(d);earn()}if(b)b.classList.add("alt");modal(gift(d))}
+const SAFIN=["Safin, you are stronger than any hard day. Keep going. I believe in you.","You’ve been working so hard, and I’m proud of you. Take a breath, then take the next step.","Whatever today throws at you, you can handle it. And I’m right here cheering for you.","Small steps still count. You are doing better than you think, Safin.","Rest if you need to. Then rise again. You always do.","Your effort matters, even when nobody sees it. I see it, and I’m proud of you.","You’ve got this, Safin. One calm breath, one brave step.","Go and shine today. The world is lucky to have you."];let sI=0;
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function drawCard(cv,txt,prog){const c=cv.getContext("2d"),F='-apple-system,"Helvetica Neue",Arial,sans-serif';
+const g=c.createLinearGradient(0,0,1080,1350);g.addColorStop(0,"#FCE8EF");g.addColorStop(.5,"#E8E5F9");g.addColorStop(1,"#DCEFE2");c.fillStyle=g;c.fillRect(0,0,1080,1350);
+[["#ff9ec0",200,180,300],["#b3a8ff",900,300,260],["#ffd88a",160,1200,280],["#8fe0c2",930,1180,300]].forEach(o=>{const r=c.createRadialGradient(o[1],o[2],0,o[1],o[2],o[3]);r.addColorStop(0,o[0]);r.addColorStop(1,o[0]+"00");c.fillStyle=r;c.fillRect(0,0,1080,1350)});
+c.fillStyle="rgba(255,255,255,.58)";rr(c,60,60,960,1230,60);c.fill();c.strokeStyle="rgba(255,255,255,.95)";c.lineWidth=3;c.stroke();
+c.textAlign="center";c.fillStyle="#79546C";c.font=`700 84px ${F}`;c.fillText("For Safin 💗",540,190);
+let m=txt.trim()||"You’ve got this, Safin.";if(!/😘\s*$/.test(m))m+=" 😘";
+const L=m.length,fs=prog?(L>200?34:L>110?44:54):(L>260?40:L>140?48:58);c.fillStyle="#4a3243";c.font=`600 ${fs}px ${F}`;
+const lines=[];m.split("\n").forEach(pp=>{let l="";pp.split(" ").forEach(w=>{const t=l?l+" "+w:w;if(c.measureText(t).width>840&&l){lines.push(l);l=w}else l=t});lines.push(l)});
+let y=310;lines.slice(0,14).forEach(l=>{c.fillText(l,540,y);y+=fs*1.4});
+if(prog){c.font=`700 40px ${F}`;c.fillStyle="#79546C";c.fillText("My progress 🌷",540,900);
+[["🌷",S.fl.length,"flowers grown"],["✅",Object.keys(S.ch).length,"challenges done"],["🏅",S.ach.length,"achievements"],["🌟",S.wish.filter(w=>w.d).length,"dreams achieved"]].forEach((s,i)=>{const x=110+(i%2)*450,yy=935+Math.floor(i/2)*120;c.fillStyle="rgba(255,255,255,.8)";rr(c,x,yy,410,100,30);c.fill();c.textAlign="left";c.fillStyle="#4a3243";c.font=`700 44px ${F}`;c.fillText(s[0]+" "+s[1],x+24,yy+48);c.font=`500 26px ${F}`;c.fillText(s[2],x+24,yy+82)});c.textAlign="center"}
+c.fillStyle="#79546C";c.font=`italic 600 54px ${F}`;c.fillText("With love, Abonti 😘",540,1250)}
+function pdfFrom(cv){const j=atob(cv.toDataURL("image/jpeg",.92).split(",")[1]),W=cv.width,Hh=cv.height,pw=W/2,ph=Hh/2;let out="%PDF-1.4\n";const o=[];const obj=(n,b)=>{o[n]=out.length;out+=n+" 0 obj\n"+b+"\nendobj\n"};
+obj(1,"<</Type/Catalog/Pages 2 0 R>>");obj(2,"<</Type/Pages/Kids[3 0 R]/Count 1>>");obj(3,`<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${pw} ${ph}]/Resources<</XObject<</I 4 0 R>>>>/Contents 5 0 R>>`);
+obj(4,`<</Type/XObject/Subtype/Image/Width ${W}/Height ${Hh}/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${j.length}>>\nstream\n${j}\nendstream`);
+const cs=`q ${pw} 0 0 ${ph} 0 0 cm /I Do Q`;obj(5,`<</Length ${cs.length}>>\nstream\n${cs}\nendstream`);
+const x=out.length;out+="xref\n0 6\n0000000000 65535 f \n"+[1,2,3,4,5].map(n=>String(o[n]).padStart(10,"0")+" 00000 n \n").join("")+`trailer\n<</Size 6/Root 1 0 R>>\nstartxref\n${x}\n%%EOF`;
+const u=new Uint8Array(out.length);for(let i=0;i<out.length;i++)u[i]=out.charCodeAt(i);return new Blob([u],{type:"application/pdf"})}
+function dl(b,n){const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=n;document.body.append(a);a.click();a.remove()}
+R.safin=()=>`<h2>Motivate Safin 💪</h2><p class="sm">Write something that lifts him up, then save it as a picture or PDF to share. A 😘 and your signature are added automatically.</p><div class="card"><textarea id="sm" rows="5" maxlength="400" aria-label="Message for Safin">${esc(S.sm||SAFIN[0])}</textarea><div class="row"><button class="alt" id="sn">New idea ✨</button></div><label><input type="checkbox" id="sp" ${S.sp===0?"":"checked"}> Include my progress</label></div><div class="card"><canvas id="cv" width="1080" height="1350" style="width:100%;height:auto;border-radius:20px" role="img" aria-label="Preview of the card for Safin"></canvas><div class="row"><button id="spng">Save PNG</button><button class="alt" id="spdf">Save PDF</button><button class="gold" id="ssh">Share</button></div></div>`;
+R.diary=()=>{S.jr=S.jr||[];S.cd=S.cd||[];const now=new Date(new Date().toDateString());return `<h2>My Diary 📔</h2><div class="card"><h3>Gratitude journal</h3><p class="sm">Private, saved only on this device.</p><textarea id="jt" rows="3" maxlength="500" placeholder="Today I’m grateful for…" aria-label="Journal entry"></textarea><button id="ja">Save entry</button></div>${S.jr.map((j,i)=>`<div class="card"><div class="sm">${j.d}</div><p>${esc(j.t)}</p><button class="alt" data-jx="${i}">Delete</button></div>`).join("")}<div class="card"><h3>Special dates ⏳</h3><input id="cn" maxlength="40" placeholder="Name (birthday, exam, trip…)" aria-label="Date name"><input id="cdt" type="date" aria-label="Date"><button id="ca">Add date</button></div>${S.cd.map((c,i)=>{const n=Math.round((new Date(c.date+"T00:00")-now)/864e5);return `<div class="card"><h3>${esc(c.n)}</h3><div class="msg">${n>0?n+" days to go ✨":n==0?"Today! 🎉":Math.abs(n)+" days ago 💗"}</div><button class="alt" data-cx="${i}">Remove</button></div>`}).join("")}`};
+function go(s){clearInterval(window.gt);cur_s=s;document.querySelectorAll("section").forEach(e=>e.classList.toggle("on",e.id==s));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.s==s||(b.dataset.s=="more"&&!MAIN.includes(s))));const nb=document.querySelector("#nav button.on");nb&&nb.scrollIntoView({inline:"center",block:"nearest"});const e=$("#"+s);e.innerHTML=R[s]();wire(s,e);bind(e);scrollTo(0,0)}
+function wire(s,e){const $$=x=>e.querySelector(x);
+if(s=="home"){e.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go));$$("#sunbtn").onclick=()=>{const m=rnd();earn();$$("#sunout").innerHTML=msgCard(m);bind($$("#sunout"))};e.querySelectorAll("[data-st]").forEach(b=>{const f=()=>{const i=+b.dataset.st;if(!S.stars.includes(i)){S.stars.push(i);earn()}toast(["You light up rooms.","Your effort is noticed.","You are growing beautifully.","Someone is proud of you.","Your story is lovely.","You are enough."][i]);save();go("home")};b.onclick=f;b.onkeydown=ev=>{if(ev.key=="Enter")f()}})}
+if(s=="sun"){$$("#rd").onclick=()=>{rnd();go("sun")};$$("#pv").onclick=()=>{view(M[(cur.id+M.length-1)%M.length]);go("sun")};$$("#nx").onclick=()=>{view(M[(cur.id+1)%M.length]);go("sun")};$$("#qs").oninput=ev=>{q=ev.target.value;const p=ev.target.selectionStart;go("sun");$("#qs").focus();$("#qs").setSelectionRange(p,p)};$$("#cs").onchange=ev=>{cat=ev.target.value;go("sun")}}
+if(s=="garden-s"){$$("#pl").onclick=()=>{if(S.seeds<1)return toast("Complete something kind to earn seeds ♡");S.seeds--;S.fl.push({t:+$$("#ft").value,w:0});save();go(s)};e.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>{const f=S.fl[b.dataset.w];f.w=Math.min(6,f.w+1);save();toast("Watered 💧");go(s)})}
+if(s=="mood")e.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{const m=MOODS[b.dataset.m],q2=M[Math.floor(Math.random()*M.length)];$$("#mo").innerHTML=`<div class="card"><div class="msg">${m[0]}</div><p>Try this: ${m[1]}</p></div>${msgCard(q2)}<button class="alt" id="bz">Breathing exercise</button><div id="br" aria-live="polite"></div>`;bind($$("#mo"));$$("#bz").onclick=breathe})
+if(s=="env-s")$$("#ev").onclick=ev=>{ev.target.classList.add("open");setTimeout(()=>{modal(LET[Math.floor(Math.random()*LET.length)]);ev.target.classList.remove("open")},600)};
+if(s=="wish"){$$("#wa").onclick=()=>{const v=$$("#wi").value.trim();if(!v)return toast("Write a wish first");if(S.wish.some(w=>w.t.toLowerCase()==v.toLowerCase()))return toast("That wish is already in your jar");S.wish.push({t:v,d:0});earn();go(s)};
+e.querySelectorAll("[data-wd]").forEach(b=>b.onclick=()=>{const w=S.wish[b.dataset.wd];w.d=!w.d;save();go(s)});e.querySelectorAll("[data-we]").forEach(b=>b.onclick=()=>{const w=S.wish[b.dataset.we],v=prompt("Edit wish",w.t);if(v&&v.trim()){w.t=v.trim();save();go(s)}});e.querySelectorAll("[data-wx]").forEach(b=>b.onclick=()=>{if(confirm("Delete this wish?")){S.wish.splice(b.dataset.wx,1);save();go(s)}})}
+if(s=="ach"){$$("#aa").onclick=()=>{const t=$$("#at").value.trim();if(!t)return toast("Add a title first");S.ach.unshift({t,n:$$("#ad").value.trim(),d:new Date().toLocaleDateString()});earn();toast("Added 👑");go(s)};e.querySelectorAll("[data-ax]").forEach(b=>b.onclick=()=>{if(confirm("Remove this card?")){S.ach.splice(b.dataset.ax,1);save();go(s)}})}
+if(s=="games")e.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>G[b.dataset.g]($$("#gm")));
+if(s=="gifts"){$$("#gt").onclick=()=>openG(Math.min(365,dayN()));e.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>openG(+b.dataset.d,b))}
+if(s=="photos"){$$("#pad").onclick=()=>{const f=$$("#pf").files[0];if(!f)return toast("Choose a photo first");const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,700/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);S.photos.unshift({src:c.toDataURL("image/jpeg",.72),c:$$("#pc").value.trim(),d:new Date().toLocaleDateString()});save();toast("Memory saved 📸");go(s)};i.onerror=()=>toast("That image couldn’t be read");i.src=r.result};r.readAsDataURL(f)};e.querySelectorAll("[data-px]").forEach(b=>b.onclick=()=>{if(confirm("Remove this photo?")){S.photos.splice(b.dataset.px,1);save();go(s)}})}
+if(s=="safin"){const cv=$$("#cv"),ta=$$("#sm"),sp=$$("#sp"),dr=()=>{S.sm=ta.value;S.sp=sp.checked?1:0;save();drawCard(cv,ta.value,sp.checked)};ta.oninput=dr;sp.onchange=dr;$$("#sn").onclick=()=>{ta.value=SAFIN[++sI%SAFIN.length];dr()};dr();
+$$("#spng").onclick=()=>cv.toBlob(b=>{dl(b,"for-safin.png");toast("Picture saved 💗")});
+$$("#spdf").onclick=()=>{try{dl(pdfFrom(cv),"for-safin.pdf");toast("PDF saved 💗")}catch(x){toast("Couldn’t make the PDF. Try Save PNG.")}};
+$$("#ssh").onclick=()=>cv.toBlob(async b=>{const f=new File([b],"for-safin.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],text:ta.value+" 😘"})}catch(x){}}else{dl(b,"for-safin.png");toast("Sharing isn’t available here, so the picture was saved")}})}
+if(s=="mus"){$$("#mp").onclick=mPlay;$$("#mv").oninput=ev=>{S.sound=+ev.target.value;save();yt("setVolume",[S.sound]);$("#vol").value=S.sound};$$("#msv").onclick=()=>{const v=$$("#ml").value.trim();if(!parseYT(v))return toast("Please paste a valid YouTube link");S.mus=v;save();$("#mplayer").innerHTML="";mp=0;mPlay();toast("Link saved 🎶")};$$("#mrs").onclick=()=>{S.mus="";save();$$("#ml").value="";$("#mplayer").innerHTML="";mp=0;mUI();toast("Back to the default song")};mUI()}
+if(s=="diary"){$$("#ja").onclick=()=>{const t=$$("#jt").value.trim();if(!t)return toast("Write a few words first");S.jr.unshift({t,d:new Date().toLocaleDateString()});earn();toast("Saved 📔");go(s)};e.querySelectorAll("[data-jx]").forEach(b=>b.onclick=()=>{if(confirm("Delete this entry?")){S.jr.splice(b.dataset.jx,1);save();go(s)}});
+$$("#ca").onclick=()=>{const n=$$("#cn").value.trim(),d=$$("#cdt").value;if(!n||!d)return toast("Add a name and a date");S.cd.push({n,date:d});save();go(s)};e.querySelectorAll("[data-cx]").forEach(b=>b.onclick=()=>{S.cd.splice(b.dataset.cx,1);save();go(s)})}
+if(s=="open")e.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>modal(OPEN[b.dataset.o][1]));
+if(s=="chal"&&!S.ch[today()])$$("#cd").onclick=()=>{S.ch[today()]=1;earn();toast("Beautiful! A seed for your garden 🌱");go(s)};
+if(s=="set"){$$("#th").value=S.theme;$$("#th").onchange=ev=>{S.theme=ev.target.value;save();apply()};$$("#rm").onchange=ev=>{S.rm=+ev.target.checked;save();apply()};$$("#fs").oninput=ev=>{S.fs=+ev.target.value;save();apply()};$$("#gr").onchange=ev=>{S.greet=ev.target.value;save();toast("Saved")};$$("#rp").onclick=()=>{S.intro=0;save();location.reload()};
+$$("#ex").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="dear-abonti-backup.json";a.click();toast("Backup downloaded")};
+$$("#im").onchange=ev=>{const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(j.v!==1||!Array.isArray(j.wish)||!Array.isArray(j.ach))throw 0;S=Object.assign({},D,j);save();apply();toast("Backup imported");go("set")}catch(x){toast("That file isn’t a valid backup")}};if(ev.target.files[0])r.readAsText(ev.target.files[0])};
+$$("#rs").onclick=()=>{if(confirm("Reset all progress? This can’t be undone. Export a backup first if unsure.")){S=Object.assign({},D,{intro:1});save();apply();go("set")}}}}
+function breathe(){const b=$("#br");let n=0;const st=["Breathe in…","Hold…","Breathe out…"];clearInterval(breathe.t);b.textContent=st[0];breathe.t=setInterval(()=>{n++;if(n>=12){clearInterval(breathe.t);b.textContent="Well done ♡";return}b.textContent=st[n%3]},3000)}
+function apply(){const hr=new Date().getHours();document.documentElement.dataset.p=hr<5||hr>=20?"n":hr<11?"m":hr<17?"d":"e";document.documentElement.dataset.t=S.theme;document.documentElement.style.setProperty("--fs",S.fs+"px");document.body.classList.toggle("rm",!!S.rm)}
+// music (YouTube embed + visualizer)
+const DEF="https://youtu.be/bLy00DnF4RQ";let mp=0,vzR=0;
+const yt=(f,a)=>{const w=$("#mplayer iframe");if(w)w.contentWindow.postMessage(JSON.stringify({event:"command",func:f,args:a||[]}),"*")};
+function parseYT(u){u=(u||"").trim();if(!u)return null;let v=null,l=null;try{const x=new URL(/^https?:/i.test(u)?u:"https://"+u),hn=x.hostname.replace(/^www\.|^m\./,"");if(!/^(music\.)?youtube\.com$|^youtu\.be$/.test(hn))return null;l=x.searchParams.get("list");if(hn=="youtu.be")v=x.pathname.slice(1,12);else if(x.pathname=="/watch")v=x.searchParams.get("v");else{const m=x.pathname.match(/^\/(embed|shorts|live)\/([\w-]{11})/);if(m)v=m[2]}if(v&&!/^[\w-]{11}$/.test(v))v=null;if(l&&!/^[\w-]{10,64}$/.test(l))l=null}catch(e){return null}return v||l?{v,l}:null}
+function ytSrc(q){const b="autoplay=1&loop=1&playsinline=1&enablejsapi=1";return q.l&&!q.v?`https://www.youtube.com/embed/videoseries?list=${q.l}&${b}`:q.l?`https://www.youtube.com/embed/${q.v}?list=${q.l}&${b}`:`https://www.youtube.com/embed/${q.v}?playlist=${q.v}&${b}`}
+function mPlay(){if(!mp){const q=parseYT(S.mus||DEF);if(!q){toast("That link isn’t a valid YouTube link");return}$("#mplayer").innerHTML=`<iframe title="Background music" allow="autoplay; encrypted-media" src="${ytSrc(q)}"></iframe>`;mp=1;toast("Music needs an internet connection");setTimeout(()=>yt("setVolume",[S.sound]),1500)}else if(mp==1){yt("pauseVideo");mp=2}else{yt("playVideo");mp=1}mUI()}
+function mUI(){$("#music").textContent=mp==1?"⏸ Music":"🎵 Music";const b=$("#mp");if(b)b.textContent=mp==1?"⏸ Pause":"▶ Play";viz()}
+function viz(){cancelAnimationFrame(vzR);const cv=$("#vz");if(!cv||!cv.isConnected)return;const c=cv.getContext("2d"),W=cv.width,H=cv.height,N=64,rm=S.rm||matchMedia("(prefers-reduced-motion:reduce)").matches;let cur=mp==1?1:.12;
+const ps=Array.from({length:46},()=>({x:Math.random()*W,y:Math.random()*H,s:.4+Math.random(),r:1.5+Math.random()*3.5,h:Math.random()}));
+const wv=(i,t)=>Math.abs(Math.sin(t*2.3+i*.55)*Math.sin(t*.9+i*.21)*.7+Math.sin(t*3.7+i*1.3)*.3);
+(function f(ms){if(!cv.isConnected||cur_s!="mus")return;if(!rm)vzR=requestAnimationFrame(f);const t=ms/1000,tg=mp==1?1:.12;cur+=(tg-cur)*.06;if(rm)cur=mp==1?.6:.12;
+const beat=(t*1.75)%1,k=Math.pow(1-beat,3.5)*cur;
+let g=c.createLinearGradient(0,0,W,H);g.addColorStop(0,"#2a1740");g.addColorStop(.5,"#5b2a5f");g.addColorStop(1,"#1c2c5a");c.fillStyle=g;c.fillRect(0,0,W,H);
+[[.2,.3,"#ff5d9e"],[.8,.25,"#7a6cff"],[.5,.9,"#ffb347"]].forEach((o,i)=>{const r=260+k*90+Math.sin(t+i)*30,rg=c.createRadialGradient(W*o[0],H*o[1],0,W*o[0],H*o[1],r);rg.addColorStop(0,o[2]+"88");rg.addColorStop(1,o[2]+"00");c.fillStyle=rg;c.fillRect(0,0,W,H)});
+ps.forEach(p=>{p.y-=p.s*(.3+cur*1.4);p.x+=Math.sin(t+p.h*9)*.4;if(p.y<-10){p.y=H+10;p.x=Math.random()*W}c.fillStyle=`hsla(${330+p.h*60},100%,85%,${.25+k*.4})`;c.beginPath();c.arc(p.x,p.y,p.r*(1+k*.6),0,6.283);c.fill()});
+const cx=W/2,cy=H*.46,R=95+k*26;c.save();c.translate(cx,cy);c.rotate(t*.18);c.lineCap="round";c.lineWidth=7;
+for(let i=0;i<N;i++){const a=i/N*6.283,l=6+cur*(18+78*wv(i,t))+k*34;c.strokeStyle=`hsl(${320+i/N*70},95%,${68+k*12}%)`;c.beginPath();c.moveTo(Math.cos(a)*R,Math.sin(a)*R);c.lineTo(Math.cos(a)*(R+l),Math.sin(a)*(R+l));c.stroke()}c.restore();
+c.shadowColor="#ff7eb3";c.shadowBlur=30+k*40;c.fillStyle="#fff";c.font=`${70+k*22}px -apple-system,Arial,sans-serif`;c.textAlign="center";c.textBaseline="middle";c.fillText("♡",cx,cy);c.shadowBlur=0;
+const bw=W/48;for(let i=0;i<48;i++){const hh=8+cur*(10+130*wv(i*1.3,t+.4))+k*30,x=i*bw+bw*.18;const bg=c.createLinearGradient(0,H-hh,0,H);bg.addColorStop(0,"#ffd88a");bg.addColorStop(1,"#ff6fa5");c.fillStyle=bg;rr(c,x,H-hh-6,bw*.64,hh,bw*.3);c.fill();c.globalAlpha=.18;c.fillStyle="#fff";rr(c,x,H-4,bw*.64,Math.min(hh*.25,14),4);c.fill();c.globalAlpha=1}
+})(performance.now())}
+$("#music").onclick=mPlay;$("#mviz").onclick=()=>go("mus");
+$("#vol").value=S.sound;$("#vol").oninput=e=>{S.sound=+e.target.value;save();yt("setVolume",[S.sound])};
+R.mus=()=>`<h2>Music 🎵</h2><div class="card" style="padding:12px"><canvas id="vz" width="900" height="560" style="width:100%;height:auto;border-radius:20px;display:block" role="img" aria-label="Music visualizer"></canvas><div class="row" style="justify-content:center;margin-top:10px"><button id="mp">▶ Play</button><input id="mv" type="range" min="0" max="100" value="${S.sound}" aria-label="Volume" style="width:150px"></div></div><div class="card"><h3>Your own music</h3><p class="sm">Paste a YouTube song, video or playlist link.</p><input id="ml" inputmode="url" aria-label="YouTube link" placeholder="https://youtu.be/…" value="${esc(S.mus||"")}"><div class="row"><button id="msv">Use this link</button><button class="alt" id="mrs">Use default song</button></div><p class="sm">The visualizer dances while music plays. It can’t read the audio from YouTube, so it moves to a gentle rhythm of its own. Music needs an internet connection, and the video must allow embedding.</p></div>`;
+// nav + intro
+const IC={home:"🏠",sun:"☀️","garden-s":"🌷",mood:"💗","env-s":"💌",wish:"✨",ach:"👑",open:"🎁",chal:"🌱",games:"🎮",gifts:"🎀",photos:"📸",safin:"💪",mus:"🎵",diary:"📔",favs:"❤️",set:"⚙️"};
+const TAB=[["home","Home","🏠"],["sun","Sunshine","☀️"],["garden-s","Garden","🌷"],["games","Games","🎮"],["more","More","⋯"]],MAIN=["home","sun","garden-s","games"];
+$("#nav").innerHTML=TAB.map(s=>`<button data-s="${s[0]}" aria-label="${s[1]}"><span>${s[2]}</span>${s[1]}</button>`).join("");
+const closeM=()=>$("#modal").classList.remove("on");
+function sheet(){$("#modal").classList.add("on");$("#mc").innerHTML=`<h3 style="text-align:center;margin:0">More</h3><div class="list">${SEC.filter(s=>!MAIN.includes(s[0])).map(s=>`<button class="lr" data-s="${s[0]}"><span class="ic">${IC[s[0]]}</span>${s[1]}<i>›</i></button>`).join("")}</div><button class="alt" id="mx" style="width:100%;margin:14px 0 0">Done</button>`;$("#mx").onclick=closeM;$("#mc").querySelectorAll(".lr").forEach(b=>b.onclick=()=>{closeM();go(b.dataset.s)})}
+$("#nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;b.dataset.s=="more"?sheet():go(b.dataset.s)};
+$("#modal").onclick=e=>{if(e.target.id=="modal")closeM()};
+addEventListener("scroll",()=>$("#bar").classList.toggle("on",scrollY>70),{passive:true});
+function petals(){if(S.rm)return;for(let i=0;i<14;i++){const p=document.createElement("span");p.className="pt";p.textContent=["🌸","🌷","🦋","✨"][i%4];p.style.left=Math.random()*100+"vw";p.style.animationDuration=8+Math.random()*8+"s";p.style.animationDelay=-Math.random()*8+"s";$("#ov").append(p)}}
+function leave(){S.intro=1;save();$("#ov").classList.add("out");setTimeout(()=>$("#ov").remove(),950)}
+apply();
+if(S.intro)$("#ov").remove();else{petals();$("#enter").onclick=leave;$("#skip").onclick=leave}
+(function(){const h1=document.querySelector("main h1");let tc=0,tt;h1.onclick=()=>{tc++;clearTimeout(tt);tt=setTimeout(()=>tc=0,1500);if(tc>=7){tc=0;confetti();modal("Dear Abonti,\n\nYou found my secret. 💗 Of everything in this little world, you are the best part. I hope this made you smile.\n\nWith love, Safin 😘")}}})();
+document.addEventListener("keydown",e=>{if(e.key=="Escape")$("#modal").classList.remove("on")});
+go("home");
+</script></body></html>
